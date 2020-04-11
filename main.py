@@ -1,15 +1,18 @@
-import re
 import os
-import requests
 import argparse
 
-from bs4 import BeautifulSoup
+from gitir_downloader.constants import PACKAGE_MANAGERS
+from gitir_downloader.downloader import parse_url, download_files
 
-from constants import PACKAGE_MANAGERS
+
+ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
 def init_argparse():
-    parser = argparse.ArgumentParser(description='Process git.ir links.')
+    """
+    Initialize argparse module for commandline argument parsing.
+    """
+    parser = argparse.ArgumentParser(description='Process git.ir links.', epilog = "Enjoy the program :)")
 
     parser.add_argument('link', type = str, help = "git.ir URL")
     parser.add_argument('-n', '--name', help = "Folder name to store the downloaded files")
@@ -27,42 +30,6 @@ def identify_system():
 
         if '/usr/bin' in console_out:
             return name
-
-
-def parse_url(args):
-    """
-    Prase url and extract links
-    """
-    url = args.link
-    page = requests.get(url)
-    soup = BeautifulSoup(page.content, "html.parser")
-
-    split_url = url.split("/")[-2:]
-    folder_title = split_url[0]
-
-    with open('.links.txt', 'r+') as f:
-        if len(f.read()):
-            f.truncate(0)
-
-    for link in soup.findAll('a', attrs={'href': re.compile("^https://cdn9.git.ir/")}):
-        with open(".links.txt", "a") as f:
-            f.write(link.get('href') + '\n')
-
-    return folder_title
-
-
-def download_files(folder_title, args = ''):
-    """
-    Download files when the given URL is parsed
-    """
-    if args:
-        name = args.name
-    name = folder_title
-
-    os.system('echo Creating folder')
-    os.system(f'mkdir {name}')
-    os.system('echo Initiating download...')
-    os.system(f"cd {name} && wget -i ../.links.txt")
 
 
 def start():
