@@ -6,5 +6,6 @@
     "reportUnusedImport": true,
     "reportUnusedFunction": true,
     "reportUnusedVariable": true,
-    "reportDuplicateImport": true
+    "reportDuplicateImport": true,
+    "reportGeneralTypeIssues": false
 }
