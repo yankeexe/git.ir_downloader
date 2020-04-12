@@ -1,61 +1,66 @@
 """ Downloader for git.ir links """
-import os
-import re
+import time
 import argparse
+from pathlib import Path
 
 import requests
-from pyfiglet import Figlet
-from bs4 import BeautifulSoup
-
-from .constants import ROOT_PATH
-
-links_path = ROOT_PATH/".links.txt"
+from tqdm import tqdm
+from halo import Halo
 
 
-def parse_url(args: argparse.Namespace) -> str:
-    """
-    Prase url and extract links
-    """
-    url = args.link
+ROOT_PATH = Path(__file__).resolve().parents[1]
 
-    try:
-        page = requests.get(url)
-    except requests.exceptions.RequestException as e:
-        raise SystemExit(e)
-
-    soup = BeautifulSoup(page.content, "html.parser")
-
-    split_url = url.split("/")[-2:]
-    folder_title = split_url[0]
-
-    if links_path.is_file():
-        with open('.links.txt', 'r+') as f:
-            if len(f.read()):
-                f.truncate(0)
-    else:
-        links_path.touch()
+links_path = ROOT_PATH / ".links.txt"
 
 
-    for link in soup.findAll('a', attrs={'href': re.compile("^https://cdn[0-9]+.git.ir/")}):
-        with open(links_path, "a") as f:
-            f.write(link.get('href') + '\n')
-
-    return folder_title
-
-
-def download_files(folder_title: str, args: str = ''):
+def download_files(folder_title, LINKS, args: argparse.Namespace):
     """
     Download files when the given URL is parsed
     """
-    if args:
-        name = args.name
-    name = folder_title
 
-    dir_path = ROOT_PATH/name
+    links_len = len(LINKS)
 
-    os.system('echo Creating folder')
+    if args.name:
+        dir_path = ROOT_PATH / args.name
+    else:
+        dir_path = ROOT_PATH / folder_title
+
+    # Create folder
+    spinner = Halo(text="Creating folder", spinner="dots")
+    spinner.start()
+
     dir_path.mkdir()
-    f = Figlet(font='slant')
-    print(f.renderText('Downloading...'))
-    print(f"wget -i {links_path} -P {dir_path}/")
-    os.system(f"wget -i {links_path} -P {dir_path}/")
+    spinner.stop_and_persist(symbol="✅".encode("utf-8"), text="Folder Created")
+
+    print(f"Total files: {links_len}")
+
+    # Start download
+    for index, url in enumerate(LINKS):
+        r = requests.get(url, stream=True, headers={"Accept-Encoding": None})
+        total_size = int(r.headers.get("Content-Length"))
+
+        spinner.text = f"Downloading {index + 1}/{links_len} file"
+        spinner.spinner = "arrow3"
+        spinner.start()
+        time.sleep(1)
+        spinner.stop()
+
+        file = url.split("/")[-1]
+
+        with open(dir_path / file, "wb") as f:
+            with tqdm(
+                total=total_size,
+                desc=file,
+                unit="B",
+                unit_scale=True,
+                bar_format="{l_bar}{bar:20}{r_bar}{bar:-10b}",
+            ) as pbar:
+                for chunk in r.iter_content(chunk_size=1024):
+                    if chunk:
+                        f.write(chunk)
+                        pbar.update(len(chunk))
+
+    spinner.spinner = "monkey"
+    spinner.start()
+    time.sleep(2)
+    spinner.stop_and_persist(symbol="🔥".encode("utf-8"), text="All files downloaded.")
