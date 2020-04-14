@@ -1,15 +1,15 @@
 """ Parse URL and scrape relevant links. """
-import re
 import argparse
-from typing import List
+import re
+from typing import List, Tuple
 
 import requests
 from bs4 import BeautifulSoup
 
 
-def parse_url(args: argparse.Namespace) -> str:
+def parse_url(args: argparse.Namespace) -> Tuple[str, List]:
     """
-    Prase url and extract links
+    Parse url and extract links
     """
     url = args.link
 

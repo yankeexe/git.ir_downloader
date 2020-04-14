@@ -2,13 +2,14 @@
 import argparse
 import time
 from pathlib import Path
+from typing import List
 
 import requests
 from halo import Halo
 from tqdm import tqdm
 
 
-def download_files(folder_title, LINKS, args: argparse.Namespace):
+def download_files(folder_title: str, LINKS: List[str], args: argparse.Namespace):
     """
     Download files when the given URL is parsed
     """
