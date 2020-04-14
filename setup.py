@@ -5,12 +5,7 @@ import setuptools
 with open("README.md", "r") as f:
     long_description = f.read()
 
-requirements = [
-    "beautifulsoup4",
-    "halo",
-    "requests",
-    "tqdm"
-]
+requirements = ["beautifulsoup4", "halo", "requests", "tqdm"]
 
 # Development Requirements
 requirements_dev = ["pytest<=4.*", "black<=19.10b0"]
@@ -22,7 +17,7 @@ setuptools.setup(
     author_email="yankee.exe@gmail.com",
     description="Download videos from scattered links of git.ir",
     license="MIT",
-    packages = setuptools.find_packages(exclude=["dist", "build", "*.egg-info"]),
+    packages=setuptools.find_packages(exclude=["dist", "build", "*.egg-info"]),
     long_description=long_description,
     long_description_content_type="text/markdown",
     install_requires=requirements,
