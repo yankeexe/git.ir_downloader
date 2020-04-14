@@ -1,4 +1,5 @@
 """ Downloader for git.ir links """
+import os
 import time
 import argparse
 from pathlib import Path
@@ -8,16 +9,12 @@ from tqdm import tqdm
 from halo import Halo
 
 
-ROOT_PATH = Path(__file__).resolve().parents[1]
-
-links_path = ROOT_PATH / ".links.txt"
-
-
 def download_files(folder_title, LINKS, args: argparse.Namespace):
     """
     Download files when the given URL is parsed
     """
 
+    ROOT_PATH = Path.cwd()
     links_len = len(LINKS)
 
     if args.name:
@@ -33,6 +30,7 @@ def download_files(folder_title, LINKS, args: argparse.Namespace):
     spinner.stop_and_persist(symbol="✅".encode("utf-8"), text="Folder Created")
 
     print(f"Total files: {links_len}")
+    print(f"Download Path: {dir_path}")
 
     # Start download
     for index, url in enumerate(LINKS):
