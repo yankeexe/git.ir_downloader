@@ -45,14 +45,14 @@ def download_files(folder_title, LINKS, args: argparse.Namespace):
         spinner.stop()
 
         file = url.split("/")[-1]
-        file = (file[:50] + '...') if len(file) > 50 else file
+        file = (file[:50] + "...") if len(file) > 50 else file
         with open(dir_path / file, "wb") as f:
             with tqdm(
-                    total=total_size,
-                    desc=f"{file:<50}",
-                    unit="B",
-                    unit_scale=True,
-                    bar_format="{l_bar}{bar:20}{r_bar}{bar:-10b}",
+                total=total_size,
+                desc=f"{file:<53}",
+                unit="B",
+                unit_scale=True,
+                bar_format="{l_bar}{bar:20}{r_bar}{bar:-10b}",
             ) as pbar:
                 for chunk in r.iter_content(chunk_size=1024):
                     if chunk:
