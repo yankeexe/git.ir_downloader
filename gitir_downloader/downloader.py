@@ -1,11 +1,11 @@
 """ Downloader for git.ir links """
-import time
 import argparse
+import time
 from pathlib import Path
 
 import requests
-from tqdm import tqdm
 from halo import Halo
+from tqdm import tqdm
 
 
 def download_files(folder_title, LINKS, args: argparse.Namespace):
@@ -24,8 +24,10 @@ def download_files(folder_title, LINKS, args: argparse.Namespace):
     # Create folder
     spinner = Halo(text="Creating folder", spinner="dots")
     spinner.start()
-
-    dir_path.mkdir()
+    try:
+        dir_path.mkdir()
+    except FileExistsError as _:
+        pass
     spinner.stop_and_persist(symbol="✅".encode("utf-8"), text="Folder Created")
 
     print(f"Total files: {links_len}")
@@ -43,14 +45,14 @@ def download_files(folder_title, LINKS, args: argparse.Namespace):
         spinner.stop()
 
         file = url.split("/")[-1]
-
+        file = (file[:50] + '...') if len(file) > 50 else file
         with open(dir_path / file, "wb") as f:
             with tqdm(
-                total=total_size,
-                desc=file,
-                unit="B",
-                unit_scale=True,
-                bar_format="{l_bar}{bar:20}{r_bar}{bar:-10b}",
+                    total=total_size,
+                    desc=f"{file:<50}",
+                    unit="B",
+                    unit_scale=True,
+                    bar_format="{l_bar}{bar:20}{r_bar}{bar:-10b}",
             ) as pbar:
                 for chunk in r.iter_content(chunk_size=1024):
                     if chunk:
