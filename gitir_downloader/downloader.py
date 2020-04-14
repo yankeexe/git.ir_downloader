@@ -1,5 +1,4 @@
 """ Downloader for git.ir links """
-import os
 import time
 import argparse
 from pathlib import Path
