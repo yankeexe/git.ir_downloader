@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/yankeexe/git.ir_downloader.svg?token=56RxdbxQqrF5gpqx5Dyz&branch=master)](https://travis-ci.com/yankeexe/git.ir_downloader)
+
 # git.ir Video Downloader
 Downloads video files from scattered links throughout a git.ir page.
 
