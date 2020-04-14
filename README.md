@@ -6,13 +6,21 @@ Downloads video files from scattered links throughout a git.ir page.
 
 ## Installing:
 
+### Installation Requirements:
+- Python >= 3.6
+- pipx
+
 ```bash
-$ pip install gitir_downloader
+$ pip install pipx
+```
+
+```bash
+$ pipx install gitir-download
 ```
 
 ## Usage:
 
-All the files will be downloaded inside a custom folder.
+All the files will be downloaded inside a custom folder based on the URL.
 
 ```bash
 $ gid <git.ir_url>
