@@ -1,8 +1,9 @@
 """ Downloader for git.ir links """
-import argparse
+import sys
 import time
-from pathlib import Path
+import argparse
 from typing import List
+from pathlib import Path
 
 import requests
 from halo import Halo
@@ -27,8 +28,10 @@ def download_files(folder_title: str, LINKS: List[str], args: argparse.Namespace
     spinner.start()
     try:
         dir_path.mkdir()
-    except FileExistsError as _:
-        pass
+    except FileExistsError:
+        time.sleep(1)
+        print(f"\nFolder '{folder_title}' already exists " "\N{cross mark}")
+        sys.exit(1)
     spinner.stop_and_persist(symbol="✅".encode("utf-8"), text="Folder Created")
 
     print(f"Total files: {links_len}")
@@ -46,14 +49,15 @@ def download_files(folder_title: str, LINKS: List[str], args: argparse.Namespace
         spinner.stop()
 
         file = url.split("/")[-1]
-        file = (file[:50] + "...") if len(file) > 50 else file
+        print(f"Current file: {file}")
+
         with open(dir_path / file, "wb") as f:
             with tqdm(
                 total=total_size,
-                desc=f"{file:<53}",
+                desc="{:<5}".format("Progress"),
                 unit="B",
                 unit_scale=True,
-                bar_format="{l_bar}{bar:20}{r_bar}{bar:-10b}",
+                bar_format="{desc:>1.40}: {percentage:5.0f}%|{bar:40}{r_bar}{bar:-10b}",
             ) as pbar:
                 for chunk in r.iter_content(chunk_size=1024):
                     if chunk:
