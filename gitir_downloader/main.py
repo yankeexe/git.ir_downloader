@@ -1,10 +1,9 @@
+import argparse
 import os
 import sys
-import argparse
 
-from .parser import parse_url
 from .downloader import download_files
-
+from .parser import parse_url
 
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -14,7 +13,7 @@ def init_argparse():
     Initialize argparse module for commandline argument parsing.
     """
     parser = argparse.ArgumentParser(
-        description="Downnload video files from git.ir links.",
+        description="Download video files from git.ir links.",
         epilog="Enjoy the program :)",
     )
 
@@ -32,10 +31,10 @@ def init_argparse():
 
 def start():
     """
-    entrypoint for the app
+    entry-point for the app
     """
     try:
-        args = init_argparse()
+        args: argparse.Namespace = init_argparse()
 
         folder_title, LINKS = parse_url(args)
         download_files(folder_title, LINKS, args)
@@ -44,4 +43,4 @@ def start():
         try:
             sys.exit(0)
         except SystemExit:
-            os._exit(0)
+            os._exit(os.EX_OK)
