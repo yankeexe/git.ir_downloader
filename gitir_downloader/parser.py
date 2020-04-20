@@ -1,10 +1,12 @@
 """ Parse URL and scrape relevant links. """
-import argparse
 import re
+import argparse
 from typing import List, Tuple
 
 import requests
 from bs4 import BeautifulSoup
+
+from .utils.tidy_names import tidy_names
 
 
 def parse_url(args: argparse.Namespace) -> Tuple[str, List]:
@@ -30,4 +32,6 @@ def parse_url(args: argparse.Namespace) -> Tuple[str, List]:
     ):
         LINKS_STORE.append(link.get("href"))
 
-    return folder_title, LINKS_STORE
+    names = tidy_names(LINKS_STORE)
+
+    return folder_title, names
