@@ -12,9 +12,10 @@ requirements_dev = ["pytest<=4.*", "black<=19.10b0"]
 
 setuptools.setup(
     name="gitir_download",
-    version="0.0.5",
+    version="1.0.0",
     author="Yankee Maharjan",
     author_email="yankee.exe@gmail.com",
+    url="https://github.com/yankeexe/git.ir_downloader",
     description="Download videos from scattered links of git.ir",
     license="MIT",
     packages=setuptools.find_packages(exclude=["dist", "build", "*.egg-info"]),
