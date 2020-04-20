@@ -20,6 +20,12 @@ $ pip install pipx
 $ pipx install gitir-download
 ```
 
+Update package
+
+```bash
+$ pipx upgrade gitir-download
+```
+
 ## Usage:
 
 All the files will be downloaded inside a custom folder based on the URL.
