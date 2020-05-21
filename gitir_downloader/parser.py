@@ -6,7 +6,7 @@ from typing import List, Tuple
 import requests
 from bs4 import BeautifulSoup
 
-from .utils.tidy_names import tidy_names
+from gitir_downloader.utils.tidy_names import tidy_names
 
 
 def parse_url(args: argparse.Namespace) -> Tuple[str, List]:
@@ -28,10 +28,10 @@ def parse_url(args: argparse.Namespace) -> Tuple[str, List]:
     LINKS_STORE: List[str] = []
 
     for link in soup.findAll(
-        "a", attrs={"href": re.compile("^https://cdn[0-9]+.git.ir/")}
+        "a", attrs={"href": re.compile("^https://cdn(\d?)+.git.ir/")}
     ):
         LINKS_STORE.append(link.get("href"))
 
-    names = tidy_names(LINKS_STORE)
+    # names = tidy_names(LINKS_STORE)
 
-    return folder_title, names
+    return folder_title, LINKS_STORE

@@ -2,8 +2,8 @@ import os
 import sys
 import argparse
 
-from .parser import parse_url
-from .downloader import download_files
+from gitir_downloader.parser import parse_url
+from gitir_downloader.downloader import download_files
 
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 
