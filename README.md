@@ -1,14 +1,15 @@
-[![Build Status](https://travis-ci.com/yankeexe/git.ir_downloader.svg?token=56RxdbxQqrF5gpqx5Dyz&branch=master)](https://travis-ci.com/yankeexe/git.ir_downloader) ![PyPI](https://img.shields.io/pypi/v/gitir-download)
+[![Build Status](https://travis-ci.com/yankeexe/git.ir_downloader.svg?token=56RxdbxQqrF5gpqx5Dyz&branch=master)](https://travis-ci.com/yankeexe/git.ir_downloader) ![PyPI](https://img.shields.io/pypi/v/gitir-download?style=for-the-badge)
 
 # git.ir Video Downloader
+
 Downloads video files from scattered links throughout a git.ir page.
 
 > Note: Only for freely available video.
 
-
 ## Installing:
 
 ### Installation Requirements:
+
 - Python >= 3.6
 - pipx
 

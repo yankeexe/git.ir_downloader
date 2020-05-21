@@ -1,11 +1,12 @@
 {
-    "include": ["gitir_downloader/**/*.py", "tests/**/*.py"],
-    "exclude":["venv", "*.pyc", "*.egg-info", ".coverage"],
+  "include": ["gitir_downloader/**/*.py", "tests/**/*.py"],
+  "exclude": ["venv", "*.pyc", "*.egg-info", ".coverage"],
 
-    "reportMissingImports": false,
-    "reportUnusedImport": true,
-    "reportUnusedFunction": true,
-    "reportUnusedVariable": true,
-    "reportDuplicateImport": true,
-    "reportGeneralTypeIssues": false
+  "reportMissingImports": false,
+  "reportUnusedImport": true,
+  "reportUnusedFunction": true,
+  "reportUnusedVariable": true,
+  "reportDuplicateImport": true,
+  "reportGeneralTypeIssues": false,
+  "reportUndefinedVariable": false
 }
